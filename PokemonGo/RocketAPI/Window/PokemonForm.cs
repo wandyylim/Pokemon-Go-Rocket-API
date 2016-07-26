@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PokemonGo.RocketAPI.Enums;
+using PokemonGo.RocketAPI.Exceptions;
+using PokemonGo.RocketAPI.Extensions;
+using PokemonGo.RocketAPI.GeneratedCode;
 
 namespace PokemonGo.RocketAPI.Window
 {
@@ -54,6 +57,7 @@ namespace PokemonGo.RocketAPI.Window
                     ListViewItem lvi = new ListViewItem(pokemon.PokemonId.ToString());
                     listView1.Items.Add(lvi);
                     lvi.SubItems.Add(pokemon.Cp.ToString());
+                    lvi.SubItems.Add(Perfect(pokemon).ToString());
                 }
             }
             catch (TaskCanceledException) { ColoredConsoleWrite(Color.Red, "Task Canceled Exception - Restarting"); Execute(); }
@@ -62,6 +66,11 @@ namespace PokemonGo.RocketAPI.Window
             catch (ArgumentNullException) { ColoredConsoleWrite(Color.Red, "Argument Null Refference - Restarting"); Execute(); }
             catch (NullReferenceException) { ColoredConsoleWrite(Color.Red, "Null Refference - Restarting"); Execute(); }
             catch (Exception ex) { ColoredConsoleWrite(Color.Red, ex.ToString()); Execute(); }
+        }
+
+        public static float Perfect(PokemonData poke)
+        {
+            return ((float)(poke.IndividualAttack + poke.IndividualDefense + poke.IndividualStamina) / (3.0f * 15.0f)) * 100.0f;
         }
 
         private void ColoredConsoleWrite(Color red, string taskCanceledExceptionRestarting)
