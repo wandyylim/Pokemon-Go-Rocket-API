@@ -289,6 +289,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(468, 298);
+            this.Controls.Add(this.pokestopRadius);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.IVThreshold);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.gMapControl1);
