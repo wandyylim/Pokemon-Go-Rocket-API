@@ -29,6 +29,8 @@ namespace PokemonGo.RocketAPI.Window
             razzmodeCb.Text = Settings.Instance.RazzBerryMode;
             razzSettingText.Text = Settings.Instance.RazzBerrySetting.ToString();
             transferTypeCb.Text = Settings.Instance.TransferType;
+            pokestopRadius.Text = Settings.Instance.PokestopRadius.ToString();
+            IVThreshold.Text = Settings.Instance.IVThreshold.ToString();
             transferCpThresText.Text = Settings.Instance.TransferCPThreshold.ToString();
             evolveAllChk.Checked = Settings.Instance.EvolveAllGivenPokemons;
             // Initialize map:
@@ -76,6 +78,8 @@ namespace PokemonGo.RocketAPI.Window
             Settings.Instance.SetSetting(razzSettingText.Text, "RazzBerrySetting");
             Settings.Instance.SetSetting(transferTypeCb.Text, "TransferType");
             Settings.Instance.SetSetting(transferCpThresText.Text, "TransferCPThreshold");
+            Settings.Instance.SetSetting(IVThreshold.Text, "IVThreshold");
+            Settings.Instance.SetSetting(pokestopRadius.Text, "PokestopRadius");
             Settings.Instance.SetSetting(evolveAllChk.Checked ? "true" : "false", "EvolveAllGivenPokemons");
             Settings.Instance.Reload();
             Close();
