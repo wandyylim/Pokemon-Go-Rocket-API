@@ -52,6 +52,10 @@
             this.gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.IVThreshold = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.pokestopRadius = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // authTypeLabel
@@ -283,6 +287,44 @@
             this.label6.Size = new System.Drawing.Size(35, 13);
             this.label6.TabIndex = 24;
             this.label6.Text = "label6";
+            // 
+            // IVThreshold
+            // 
+            this.IVThreshold.Location = new System.Drawing.Point(151, 306);
+            this.IVThreshold.Margin = new System.Windows.Forms.Padding(4);
+            this.IVThreshold.Name = "IVThreshold";
+            this.IVThreshold.Size = new System.Drawing.Size(132, 22);
+            this.IVThreshold.TabIndex = 26;
+            this.IVThreshold.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(16, 309);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(92, 17);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "IV Threshold:";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // pokestopRadius
+            // 
+            this.pokestopRadius.Location = new System.Drawing.Point(151, 336);
+            this.pokestopRadius.Margin = new System.Windows.Forms.Padding(4);
+            this.pokestopRadius.Name = "pokestopRadius";
+            this.pokestopRadius.Size = new System.Drawing.Size(132, 22);
+            this.pokestopRadius.TabIndex = 28;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(16, 339);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(119, 17);
+            this.label8.TabIndex = 27;
+            this.label8.Text = "Pokestop Radius:";
             // 
             // SettingsForm
             // 
