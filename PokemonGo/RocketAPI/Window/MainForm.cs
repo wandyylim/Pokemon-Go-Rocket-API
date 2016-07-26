@@ -357,12 +357,40 @@ namespace PokemonGo.RocketAPI.Window
                 await Task.Delay(3000);
             }
         }
+        
+        public static double DistanceTo(double lat1, double lon1, double lat2, double lon2, char unit = 'K')
+        {
+            double rlat1 = Math.PI * lat1 / 180;
+            double rlat2 = Math.PI * lat2 / 180;
+            double theta = lon1 - lon2;
+            double rtheta = Math.PI * theta / 180;
+            double dist =
+                Math.Sin(rlat1) * Math.Sin(rlat2) + Math.Cos(rlat1) *
+                Math.Cos(rlat2) * Math.Cos(rtheta);
+            dist = Math.Acos(dist);
+            dist = dist * 180 / Math.PI;
+            dist = dist * 60 * 1.1515;
 
+            switch (unit)
+            {
+                case 'K': //Kilometers -> default
+                    return dist * 1.609344;
+                case 'N': //Nautical Miles 
+                    return dist * 0.8684;
+                case 'M': //Miles
+                    return dist;
+            }
+
+            return dist;
+        }
+        
         private async Task ExecuteFarmingPokestopsAndPokemons(Client client)
         {
             var mapObjects = await client.GetMapObjects();
 
-            var pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts).Where(i => i.Type == FortType.Checkpoint && i.CooldownCompleteTimestampMs < DateTime.UtcNow.ToUnixTime());
+            var pokeStops = mapObjects.MapCells.SelectMany(i => i.Forts).Where(i => i.Type == FortType.Checkpoint && i.CooldownCompleteTimestampMs < DateTime.UtcNow.ToUnixTime()
+            && DistanceTo(Convert.ToDouble(ClientSettings.DefaultLatitude), Convert.ToDouble(ClientSettings.DefaultLongitude), Convert.ToDouble(i.Latitude), Convert.ToDouble(i.Longitude)) <= ClientSettings.PokestopRadius
+            ).OrderBy(i => DistanceTo(Convert.ToDouble(ClientSettings.DefaultLatitude), Convert.ToDouble(ClientSettings.DefaultLongitude), Convert.ToDouble(i.Latitude), Convert.ToDouble(i.Longitude)));
 
             foreach (var pokeStop in pokeStops)
             {
@@ -457,7 +485,7 @@ namespace PokemonGo.RocketAPI.Window
                         .ToList();
 
                 //ColoredConsoleWrite(ConsoleColor.White, $"Grinding {unwantedPokemon.Count} pokemons of type {unwantedPokemonType}");
-                await TransferAllGivenPokemons(client, unwantedPokemon);
+                await TransferAllGivenPokemons(client, unwantedPokemon, ClientSettings.IVThreshold);
             }
 
             //ColoredConsoleWrite(ConsoleColor.White, $"Finished grinding all the meat");
@@ -600,7 +628,7 @@ namespace PokemonGo.RocketAPI.Window
                 //var unwantedPokemon = pokemonOfDesiredType.Skip(1) // keep the strongest one for potential battle-evolving
                 //                                          .ToList();
                 ColoredConsoleWrite(Color.Gray, $"Grinding {pokemonToDiscard.Count} pokemon below {cpThreshold} CP.");
-                await TransferAllGivenPokemons(client, pokemonToDiscard);
+                await TransferAllGivenPokemons(client, pokemonToDiscard, ClientSettings.IVThreshold);
 
             }
 
